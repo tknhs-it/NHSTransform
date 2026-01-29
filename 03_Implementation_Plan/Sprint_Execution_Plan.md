@@ -97,7 +97,28 @@ Get the "front door" open. Staff & students can see the Nossal Digital Hub in Te
 
 **Owner:** IT + Admin staff (2 days)
 
-#### 1.6 Governance & Security Foundation (3 days) — *unchanged*
+#### 1.6 Teams Rationalization + Channel Cleanup (2 days) — **NEW**
+- [ ] Phase 1: Build new channel structure (behind scenes)
+  - [ ] Create 8 core channels in "Staff of Nossal HS": #announcements, #daily-ops, #teaching-learning, #wellbeing-support, #events-programs, #staff-forum, #help-requests, #resources
+  - [ ] Add tabs to #help-requests (Nossal Hub, IT Request, Maintenance, Access, Equipment, Purchase)
+  - [ ] Add tabs to #resources (SharePoint Hub, Forms, Policies)
+- [ ] Phase 2: Test with pilot group (10 staff, 1 week)
+  - [ ] Gather feedback: "Can you find what you need?"
+  - [ ] Fix navigation issues before full launch
+- [ ] Phase 3: Launch day (Feb 27)
+  - [ ] Pin Nossal Hub for all staff
+  - [ ] Archive legacy channels (lock + add "moved to Hub" tab)
+  - [ ] Monitor for issues (first week daily check-in)
+
+**Owner:** Teams admin + Comms Lead + IT Lead (2 days)  
+**Acceptance Criteria:**
+- 8 new core channels created + tested
+- #help-requests and #resources have correct tabs
+- Pilot group can navigate to any service/request/knowledge in < 2 clicks
+- Legacy channels are locked (read-only) with migration tab
+- Staff understand where things moved
+
+#### 1.7 Governance & Security Foundation (3 days) — *unchanged*
 - [ ] Power Platform setup (DEV + PROD environments)
 - [ ] Entra ID + MFA (confirm enabled)
 - [ ] Purview compliance (retention labels, sensitivity labels, DLP)
@@ -106,20 +127,22 @@ Get the "front door" open. Staff & students can see the Nossal Digital Hub in Te
 
 **Owner:** IT Director + IT Admin (3 days)
 
-#### 1.7 Documentation & Knowledge Transfer (1 day) — *UPDATED*
+#### 1.8 Documentation & Knowledge Transfer (1 day) — *UPDATED*
 - [ ] Document Compass SSO setup steps (for future IT staff)
 - [ ] Document Service Catalogue with SystemOfRecord + LaunchType examples
-- [ ] Create admin runbook: "How to Manage Nossal Hub" (add users, update KB, add Compass tiles, etc.)
-- [ ] Train 2-3 IT staff on Viva Connections + SharePoint admin + Compass SSO
+- [ ] Create admin runbook: "How to Manage Nossal Hub + Teams Structure" (add users, update KB, manage channels, etc.)
+- [ ] Create Teams rationalization FAQ for staff ("Why are old channels locked?", "Where do I find X?")
+- [ ] Train 2-3 IT staff on Viva Connections + SharePoint admin + Compass SSO + Teams moderation
 
-**Owner:** Digital Transformation Lead (1 day)
+**Owner:** Digital Transformation Lead + Comms Lead (1 day)
 
 ### Sprint 1 Testing & QA
 
 - [ ] **Functional Testing:** All pages load, Compass tiles open via SSO, Microsoft placeholders work
 - [ ] **SSO Testing:** Pilot group can access Compass without re-login
 - [ ] **Security Testing:** DLP blocks test email with student data, MFA works, permissions filter correctly
-- [ ] **UAT:** 10 staff volunteers test portal for 3 days, collect NPS score (target: 7+/10)
+- [ ] **Teams Testing:** New channels exist, old channels locked, help-requests & resources tabs functional
+- [ ] **UAT:** 10 staff volunteers test portal + Teams structure for 3 days, collect NPS score (target: 7+/10)
 
 ### Sprint 1 Release
 
@@ -138,6 +161,8 @@ Get the "front door" open. Staff & students can see the Nossal Digital Hub in Te
 | Portal launch on-time | ✓ |
 | Compass SSO success rate | 95%+ |
 | All pages load < 2s | 95%+ |
+| Teams channels rationalized | 8 core channels live, legacy archived |
+| Staff can find services in Hub or Teams | 80%+ without help |
 | UAT NPS score | 7+/10 |
 | Staff/student awareness | 50%+ aware of Nossal Hub exists |
 
