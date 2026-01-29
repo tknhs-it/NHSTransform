@@ -63,6 +63,9 @@ User reports an IT issue. It's automatically triaged, assigned, and tracked.
 | **ResolutionNotes** | Multi-line Text | How it was fixed | Filled in by IT staff |
 | **IsEscalated** | Yes/No | Flagged for senior tech? | Manual toggle |
 | **RelatedTickets** | Lookup | Similar/linked tickets | Multi-select lookup to ITRequests |
+| **CompassPersonID** | Single Line Text | **NEW** Related student/staff in Compass | Optional, e.g., "S12345" or "E67890" |
+| **CompassEventID** | Single Line Text | **NEW** Related event/class/excursion | Optional, e.g., "CLASS-Year10-Physics-2026" |
+| **CompassLink** | Hyperlink | **NEW** Direct link to Compass record | Optional, for audit trail (e.g., https://compass.nossal/student/S12345) |
 
 ### Power App: IT Support Form
 
@@ -206,6 +209,8 @@ User reports a facility issue (plumbing, electrical, lock, cleaning, etc.). It's
 | **ActualCost** | Currency | Final cost |
 | **CompletionNotes** | Multi-line Text | What was done? |
 | **FollowUpNeeded** | Yes/No | Is there a next step? |
+| **CompassEventID** | Single Line Text | **NEW** Related event/excursion (e.g., building closure) | Optional |
+| **CompassLink** | Hyperlink | **NEW** Link to Compass event/record | Optional |
 
 ### Power Automate: Maintenance Triage Flow
 
@@ -293,6 +298,8 @@ User needs a permission or account change. It's approved by their manager/IT and
 | **ITNotes** | Multi-line Text | How was it granted? (audit trail) |
 | **SensitivityLevel** | Choice | Standard / Sensitive (for admin requests) |
 | **IsTemporary** | Yes/No | Temporary or permanent? |
+| **CompassPersonID** | Single Line Text | **NEW** Related student/staff in Compass | Optional, e.g., "S12345" (for audit) |
+| **CompassLink** | Hyperlink | **NEW** Link to Compass staff/student record | Optional |
 
 ### Power Automate: Access Request Flow
 

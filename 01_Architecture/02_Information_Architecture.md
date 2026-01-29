@@ -26,87 +26,208 @@ Users will navigate to the Nossal Digital Hub in Teams (Viva Connections app) or
 
 ---
 
-## 2. Service Catalogue (The Magic)
+## 2. Service Catalogue (The Magic) — Now Compass-Aware
 
 The **Service Catalogue** is a SharePoint List that drives:
-1. What appears in the "Request Something" tile grid
-2. Routing rules for Power Automate flows
-3. SLA targets and ownership
-4. Audience visibility (staff-only, students-only, etc.)
+1. What appears in the "Request Something" tile grid (both Compass & Microsoft services)
+2. How each tile launches: Deep link to Compass (SSO), Power App, Teams channel, or SharePoint page
+3. Routing rules for Power Automate flows
+4. SLA targets and ownership
+5. Audience visibility (staff-only, students-only, etc.)
 
 ### Service Catalogue List Schema
 
 | Field Name | Type | Purpose | Example |
 |------------|------|---------|---------|
-| **ServiceName** | Single Line Text | Display name | "Report an IT Issue" |
-| **ServiceDescription** | Multi-line Text | What it does | "Report a problem with your device, Wi-Fi, email, or classroom tech" |
-| **Category** | Choice | Top-level grouping | IT / Facilities / Admin / Student Services |
-| **Subcategory** | Choice | Secondary grouping | (IT: Printing, Wi-Fi, Account, Classroom AV, Laptop) |
+| **ServiceName** | Single Line Text | Display name | "Mark Attendance" or "Report an IT Issue" |
+| **ServiceDescription** | Multi-line Text | What it does | "Compass attendance interface" vs. "Report a problem with your device" |
+| **Category** | Choice | Top-level grouping | Compass / IT / Facilities / Admin / Student Services |
+| **Subcategory** | Choice | Secondary grouping | (Compass: Attendance, Learning, Wellbeing; IT: Printing, Wi-Fi, Account, etc.) |
+| **SystemOfRecord** | Choice | **NEW** Which system owns this? | Compass / Microsoft365 / Other |
+| **LaunchType** | Choice | **NEW** How does it open? | DeepLink / PowerApp / TeamsChannel / SharePointPage |
+| **LaunchTarget** | URL / Hyperlink | **NEW** Where does it go? | Compass URL, Power App URL, Teams URL, or SharePoint page URL |
 | **Audience** | Choice | Who can request | Staff / Students / Both |
 | **Icon** | URL / Lookup | Tile icon (optional) | Link to icon asset |
-| **FormAppLink** | URL | Power App form link | https://apps.powerapps.com/play/... |
-| **OwnerTeam** | Lookup | Team responsible | IT / Facilities / Admin |
-| **RoutingTags** | Multi-select | Flow routing metadata | Category + subcategory combo |
-| **SLATarget** | Choice | Expected response time | 4h / 1 day / 3 days / 5 days |
+| **OwnerTeam** | Lookup | Team responsible | IT / Facilities / Admin / Compass / Teaching |
+| **RoutingTags** | Multi-select | Flow routing metadata | (only for Microsoft services) |
+| **SLATarget** | Choice | Expected response time | 4h / 1 day / 3 days / 5 days / N/A (Compass) |
 | **IsActive** | Yes/No | Show in catalogue? | Yes |
 | **SortOrder** | Number | Display priority | 1, 2, 3... |
+| **CompassIntegrationLevel** | Choice | **NEW** For Compass tiles: integration maturity | Level1_SSO / Level2_SDS / Level3_iCal / Level4_Export / N/A |
 
 ### Sample Service Catalogue Entries
+
+**Compass Tiles (Deep Links via SSO)**
+
+```
+Service Name: Mark Attendance
+Category: Compass
+SubCategory: Attendance
+System of Record: Compass
+Launch Type: DeepLink
+Launch Target: https://compass.nossal.vic.edu.au/school_attendance/manage
+Owner Team: Compass Admin
+SLA Target: N/A (Compass-owned)
+Compass Integration Level: Level1_SSO
+Sort Order: 1
+
+---
+
+Service Name: Learning Tasks & Results
+Category: Compass
+SubCategory: Learning
+System of Record: Compass
+Launch Type: DeepLink
+Launch Target: https://compass.nossal.vic.edu.au/learning/tasks
+Owner Team: Curriculum
+SLA Target: N/A
+Compass Integration Level: Level1_SSO
+Sort Order: 2
+
+---
+
+Service Name: Student Wellbeing Profile
+Category: Compass
+SubCategory: Wellbeing
+System of Record: Compass
+Launch Type: DeepLink
+Launch Target: https://compass.nossal.vic.edu.au/student/wellbeing
+Owner Team: Student Services
+SLA Target: N/A
+Compass Integration Level: Level1_SSO
+Sort Order: 3
+
+---
+
+Service Name: School Events & Calendar
+Category: Compass
+SubCategory: Events
+System of Record: Compass
+Launch Type: DeepLink
+Launch Target: https://compass.nossal.vic.edu.au/events/calendar
+Owner Team: Compass Admin
+SLA Target: N/A
+Compass Integration Level: Level3_iCal
+Sort Order: 4
+```
+
+**Microsoft Tiles (Power Apps)**
 
 ```
 Service Name: Report an IT Issue
 Category: IT
 Subcategory: General Support
-Audience: Both
+System of Record: Microsoft365
+Launch Type: PowerApp
+Launch Target: https://apps.powerapps.com/play/[app-id]
 Owner Team: IT
 SLA Target: 4h (critical), 1 day (standard)
 Routing Tags: "IT", "Support", "Triage"
-Form Link: [IT Support Power App]
+Sort Order: 10
 
 ---
 
 Service Name: Request Equipment Loan
 Category: IT
 Subcategory: Equipment
-Audience: Staff
+System of Record: Microsoft365
+Launch Type: PowerApp
+Launch Target: https://apps.powerapps.com/play/[asset-app-id]
 Owner Team: IT
 SLA Target: Same-day
 Routing Tags: "IT", "Asset", "Loan"
-Form Link: [Asset Loan Power App]
+Sort Order: 11
 
 ---
 
 Service Name: Report a Maintenance Issue
 Category: Facilities
 Subcategory: Repairs
-Audience: Both
+System of Record: Microsoft365
+Launch Type: PowerApp
+Launch Target: https://apps.powerapps.com/play/[maintenance-app-id]
 Owner Team: Facilities
 SLA Target: 3 days
 Routing Tags: "Facilities", "Maintenance", "Repair"
-Form Link: [Maintenance Request Power App]
+Sort Order: 20
 
 ---
 
 Service Name: Request Access or Permissions
 Category: IT
 Subcategory: Access
-Audience: Staff
+System of Record: Microsoft365
+Launch Type: PowerApp
+Launch Target: https://apps.powerapps.com/play/[access-app-id]
 Owner Team: IT
 SLA Target: 1 day
 Routing Tags: "IT", "Access", "Approval"
-Form Link: [Access Request Power App]
+Sort Order: 12
 
 ---
 
-Service Name: Absence / Leave Request
-Category: Student Services
-Subcategory: Absence
-Audience: Students
-Owner Team: Student Services
-SLA Target: Same-day
-Routing Tags: "Student", "Absence"
-Form Link: [Absence Power App]
+Service Name: IT Support Channel
+Category: IT
+Subcategory: Support
+System of Record: Microsoft365
+Launch Type: TeamsChannel
+Launch Target: https://teams.microsoft.com/l/channel/.../IT%20Support
+Owner Team: IT
+SLA Target: N/A
+Sort Order: 13
+
+---
+
+Service Name: How-To Guides
+Category: Microsoft
+SubCategory: Knowledge Base
+System of Record: Microsoft365
+Launch Type: SharePointPage
+Launch Target: https://nossal.sharepoint.com/sites/digitalhub/SitePages/Knowledge-Base.aspx
+Owner Team: IT
+SLA Target: N/A
+Sort Order: 50
 ```
+
+### Viva Connections Dashboard Rendering
+
+The Nossal Hub dashboard tiles are dynamically generated from the Service Catalogue:
+
+```
+Tile 1: Mark Attendance
+├─ Icon: Calendar
+├─ Click → Opens Compass (SSO, no re-login)
+
+Tile 2: Learning Tasks & Results
+├─ Icon: Books
+├─ Click → Opens Compass (SSO)
+
+Tile 3: Report an IT Issue
+├─ Icon: Wrench
+├─ Click → Opens Power App form in Teams sidebar
+
+Tile 4: Request Equipment Loan
+├─ Icon: Box
+├─ Click → Opens Power App form in Teams sidebar
+
+Tile 5: Student Wellbeing
+├─ Icon: Heart
+├─ Click → Opens Compass (SSO)
+
+... (more tiles, filtered by user's audience + system availability)
+
+Tile N: How-To Guides
+├─ Icon: Question Mark
+├─ Click → Opens SharePoint Knowledge Base page
+```
+
+### Filtering Logic
+
+Tiles are shown/hidden based on:
+- **Audience filter:** Hide "Request Access" from students
+- **SystemOfRecord filter:** If Compass SSO is down, hide Compass tiles
+- **Availability filter:** If a workflow is in "Beta" or "Down for maintenance", hide it temporarily
+- **Role-based:** Managers see "Approve Access Requests" (hidden from staff)
 
 ---
 

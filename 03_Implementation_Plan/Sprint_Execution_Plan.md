@@ -27,178 +27,159 @@ End Sprint 1: ~5 days effort      ~15 days effort                ~12 days effort
 
 ---
 
-## Sprint 1: Portal Foundation (Jan 29 - Feb 27, 2026)
+## Sprint 1: Portal Foundation + Compass Integration (Jan 29 - Feb 27, 2026)
 
 ### Goal
-Get the "front door" open. Staff & students can see the Nossal Digital Hub in Teams. No workflows live yet, but the canvas is ready.
+Get the "front door" open. Staff & students can see the Nossal Digital Hub in Teams, seamlessly integrated with Compass via SSO. No workflows live yet, but the canvas is ready.
 
 ### Deliverables
 
-#### 1.1 SharePoint Home Site Setup (3 days)
+#### 1.1 Compass SAML/SSO Setup (2-3 days) — **NEW**
+- [ ] Configure Compass to trust Entra ID as SAML provider
+- [ ] Create Entra ID app registration for Compass
+- [ ] Test SSO with pilot group (5-10 staff)
+- [ ] Fix authentication issues (clock sync, certificate, user provisioning)
+- [ ] Document SAML setup process for future reference
+- [ ] Audit logging enabled in Compass (login events)
+
+**Owner:** Compass admin + M365 admin (2-3 days)  
+**Acceptance Criteria:**
+- Staff log into Teams once, click Compass tile, land in Compass without re-login
+- Audit logs show successful SAML logins
+- Zero "access denied" errors (or < 2, quickly resolved)
+- Pilot group feedback: "Seamless, no friction"
+
+#### 1.2 Service Catalogue List + Compass-Aware Schema (2 days) — **UPDATED**
+- [ ] Create ServiceCatalogue SharePoint List (new fields: SystemOfRecord, LaunchType, LaunchTarget)
+- [ ] Seed with 4 Compass tiles + 5 Microsoft tiles
+- [ ] Create "Request Something" page (gallery view, filters by SystemOfRecord)
+- [ ] Add Viva Connections tile pointing to it
+- [ ] Compass tiles link to:
+  - Mark Attendance (Compass URL)
+  - Learning Tasks (Compass URL)
+  - Student Wellbeing (Compass URL)
+  - Events (Compass URL)
+- [ ] Microsoft tiles link to placeholder Power Apps (will be live in Sprint 2)
+
+**Owner:** IT Lead + M365 admin + Builder (2 days)  
+**Acceptance Criteria:**
+- Service Catalogue list has schema with SystemOfRecord, LaunchType, LaunchTarget fields
+- "Request Something" page shows both Compass and Microsoft tiles
+- Compass tiles open Compass (SSO, no re-login)
+- Microsoft tiles have placeholder links (links to /coming-soon or demo)
+- Can filter by Category (Compass, IT, Facilities, Admin)
+
+#### 1.3 SharePoint Home Site Setup (2 days) — *unchanged*
 - [ ] Create Home Site (managed by IT Lead)
 - [ ] Design + build Home page (welcome, tiles, news section)
-- [ ] Create sub-pages: Request, Knowledge Base, IT, Facilities, Admin, Dashboards
+- [ ] Create sub-pages: Request, Knowledge Base, IT, Facilities, Compass, Admin, Dashboards
 - [ ] Set up navigation hub links
 - [ ] Apply sensitivity labels (Public / Staff-Only / Admin-Only)
-- [ ] Enable Teams integration (can embed SharePoint pages in Teams)
+- [ ] Enable Teams integration
 
-**Owner:** IT Lead + SharePoint admin (1-2 days)  
-**Acceptance Criteria:**
-- Home Site is accessible to all staff + students
-- Pages load in < 2s
-- Mobile-responsive design works on phones
-- Navigation menu works in Teams & desktop
+**Owner:** IT Lead + SharePoint admin (1-2 days)
 
-#### 1.2 Viva Connections App in Teams (2 days)
-- [ ] Enable Viva Connections license (included in A5, admin toggles it on)
+#### 1.4 Viva Connections App in Teams (2 days) — *unchanged*
+- [ ] Enable Viva Connections
 - [ ] Create Viva app pointing to Home Site
-- [ ] Configure dashboard tiles (Request Something, IT, Facilities, KB, Dashboards)
-- [ ] Set up Audience rules (hide tiles based on group membership)
+- [ ] Configure dashboard tiles (Compass tiles, Microsoft tiles, Knowledge Base)
+- [ ] Set up Audience rules (hide tiles based on group)
 - [ ] Test on Teams desktop + mobile
 
-**Owner:** Digital Transformation Lead (1-2 days)  
-**Acceptance Criteria:**
-- Viva app appears in Teams left sidebar as "Nossal Hub" icon
-- Dashboard loads
-- Tiles are clickable and route to SharePoint pages
-- Audience filtering works (students don't see staff-only tiles)
+**Owner:** Digital Transformation Lead (1-2 days)
 
-#### 1.3 Service Catalogue List + Page (2 days)
-- [ ] Create ServiceCatalogue SharePoint List
-- [ ] Add 5 core services (IT Support, Maintenance, Access Request, Asset Loan, Purchase)
-- [ ] Build "Request Something" page (gallery view, filtered by category)
-- [ ] Add Viva Connections tile pointing to it
-- [ ] Link tiles to placeholder Power Apps (not live yet, just links)
-
-**Owner:** IT Lead + Builder (1-2 days)  
-**Acceptance Criteria:**
-- Service Catalogue list has 5+ services with all schema fields populated
-- "Request Something" page shows grid of service tiles
-- Each tile has icon, description, owner, SLA target visible
-- Can filter by category
-- Links go to Power Apps (will be live in Sprint 2)
-
-#### 1.4 Knowledge Base Skeleton (2 days)
-- [ ] Create Knowledge Base SharePoint List
-- [ ] Seed with top 20 articles (writing by IT + admin staff):
-  - **Getting Started (5):** First day setup, Teams, email, Wi-Fi, password reset
-  - **How-To (8):** Request forms, access teams, join a channel, upload files, etc.
-  - **Troubleshooting (4):** Wi-Fi problems, email slow, device won't start, can't access files
-  - **Policy (3):** Device acceptable use, data classification, password standards
-- [ ] Create KB page in SharePoint (searchable list + filter by category)
+#### 1.5 Knowledge Base Skeleton (2 days) — *unchanged*
+- [ ] Create Knowledge Base list
+- [ ] Seed with top 20 articles (Getting Started, How-To, Troubleshooting, Policy)
+- [ ] Create KB page in SharePoint
 - [ ] Add Viva Connections tile
 - [ ] Enable article status workflow (Draft → Published → Archived)
 
-**Owner:** IT + Admin staff (2 days writing, 1 day list setup)  
-**Acceptance Criteria:**
-- 20 articles published + indexed
-- Articles are searchable in Teams Search
-- Categories + tags work
-- Can filter by audience (Staff-Only vs. Public)
+**Owner:** IT + Admin staff (2 days)
 
-#### 1.5 Governance & Security Foundation (3 days)
-- [ ] **Power Platform Setup:**
-  - [ ] Create DEV environment (sandbox for builders)
-  - [ ] Create PROD environment (locked down)
-  - [ ] Set environment admin roles (IT Lead = admin, Builders = creators in DEV only)
-  - [ ] Enable connector policy: Block consumer connectors in PROD
-  
-- [ ] **Entra ID & MFA:**
-  - [ ] Audit current staff/student user count
-  - [ ] Confirm MFA is enabled (Authenticator app on school devices)
-  - [ ] Create security groups: Staff, Students, IT Admins, Facilities, Approval Managers
-  
-- [ ] **Purview Compliance:**
-  - [ ] Create retention labels: "IT Records 7y", "Maintenance 3y", "Purchase 7y"
-  - [ ] Create sensitivity labels: "Public", "Staff-Only", "Admin-Only"
-  - [ ] Apply labels to Nossal Hub site (default: Staff-Only)
-  - [ ] Enable DLP: Block sensitive data (student ID, staff names) from external email
-  
-- [ ] **Defender & Audit:**
-  - [ ] Confirm Defender for Office 365 is enabled
-  - [ ] Confirm Defender for Endpoint is enabled on school devices
-  - [ ] Enable audit logging (SharePoint, Power Automate, Entra ID)
-  - [ ] Export audit logs monthly (automate if possible)
-  
-- [ ] **Change Control Process:**
-  - [ ] Create Change Control list in SharePoint (for tracking PROD deployments)
-  - [ ] Draft Change Control SOP (1-page guide for IT team)
-  - [ ] Schedule Change Control Board meetings (monthly, first Friday)
+#### 1.6 Governance & Security Foundation (3 days) — *unchanged*
+- [ ] Power Platform setup (DEV + PROD environments)
+- [ ] Entra ID + MFA (confirm enabled)
+- [ ] Purview compliance (retention labels, sensitivity labels, DLP)
+- [ ] Defender + audit logging
+- [ ] Change Control process documentation
 
-**Owner:** IT Director + IT Admin (3 days)  
-**Acceptance Criteria:**
-- DEV & PROD environments created + isolated
-- MFA working for staff/students
-- Retention labels applied to lists
-- DLP rule logs policy violations (no blocks yet, audit-only)
-- Audit logs exportable
-- Change Control list ready for Sprint 2 deployments
+**Owner:** IT Director + IT Admin (3 days)
 
-#### 1.6 Documentation & Knowledge Transfer (1 day)
-- [ ] Document all setup steps (for future IT staff)
-- [ ] Create admin runbook: "How to Manage Nossal Hub" (add users, update KB, etc.)
-- [ ] Train 2-3 IT staff on Viva Connections + SharePoint admin
+#### 1.7 Documentation & Knowledge Transfer (1 day) — *UPDATED*
+- [ ] Document Compass SSO setup steps (for future IT staff)
+- [ ] Document Service Catalogue with SystemOfRecord + LaunchType examples
+- [ ] Create admin runbook: "How to Manage Nossal Hub" (add users, update KB, add Compass tiles, etc.)
+- [ ] Train 2-3 IT staff on Viva Connections + SharePoint admin + Compass SSO
 
 **Owner:** Digital Transformation Lead (1 day)
 
 ### Sprint 1 Testing & QA
 
-- [ ] **Functional Testing:** All pages load, no broken links, mobile works
-- [ ] **Security Testing:** DLP blocks test email with student data, MFA prompt works, permission filtering works
-- [ ] **User Acceptance Testing (UAT):** 10 staff volunteers test portal for 3 days
-  - Feedback: Is it easy to find services? Is navigation clear?
-  - Collect NPS score (target: 7+/10)
-  - Fix critical issues before release
+- [ ] **Functional Testing:** All pages load, Compass tiles open via SSO, Microsoft placeholders work
+- [ ] **SSO Testing:** Pilot group can access Compass without re-login
+- [ ] **Security Testing:** DLP blocks test email with student data, MFA works, permissions filter correctly
+- [ ] **UAT:** 10 staff volunteers test portal for 3 days, collect NPS score (target: 7+/10)
 
 ### Sprint 1 Release
 
 **Release Date:** Feb 27, 2026  
-**Who:** IT Lead + Digital Transformation Lead  
 **Process:**
 1. Final QA sign-off
-2. Announce to staff: "Welcome to Nossal Digital Hub! New way to request IT/Facilities help."
-3. Soft launch to pilot group (IT staff + 20 volunteers) for 3 days
+2. Announce: "Welcome to Nossal Digital Hub! Now integrated with Compass."
+3. Soft launch to pilot (IT + 20 staff, 3 days)
 4. Full launch to all staff + students
-5. Monitor Planner + Teams for questions (first week)
-6. Fix bugs/feedback within 48h
+5. Monitor for issues (first week daily standup)
 
 ### Sprint 1 Success Metrics
 
-| Metric | Target | Owner |
-|--------|--------|-------|
-| Portal launch on-time | ✓ | IT Lead |
-| All pages load < 2s | 95%+ | Performance review |
-| Mobile responsive | ✓ | QA testing |
-| Security baseline checklist complete | ✓ | IT Director |
-| UAT NPS score | 7+/10 | User feedback |
-| Staff/student awareness | 50%+ aware of Nossal Hub exists | Comms follow-up |
+| Metric | Target |
+|--------|--------|
+| Portal launch on-time | ✓ |
+| Compass SSO success rate | 95%+ |
+| All pages load < 2s | 95%+ |
+| UAT NPS score | 7+/10 |
+| Staff/student awareness | 50%+ aware of Nossal Hub exists |
 
 ---
 
-## Sprint 2: IT Tickets MVP (Feb 28 - Apr 10, 2026)
+## Sprint 2: IT Tickets MVP + SDS Integration (Feb 28 - Apr 10, 2026)
 
 ### Goal
-First workflow goes live. IT staff now receive & track all support requests in one place.
+First workflow goes live. IT staff now receive & track all support requests. Also, Compass rosters auto-sync to Teams, creating class teams automatically.
 
 ### Deliverables
 
-#### 2.1 ITRequests List & Power App (5 days)
-- [ ] Create ITRequests SharePoint List (schema: all fields from Workflow Specs)
+#### 2.1 Compass SDS (School Data Sync) Integration (3-5 days) — **NEW**
+- [ ] **Compass admin:** Configure SDS export format (School, Staff, Student, Class, Enrollment CSVs)
+- [ ] **M365 admin:** Create SDS sync profile, map Compass fields to SDS schema
+- [ ] **Testing:** Run SDS on 2-3 classes (verify Teams auto-created, staff/students added)
+- [ ] **Troubleshooting:** Fix missing accounts, duplicate groups, enrollment issues
+- [ ] **Rollout:** Full SDS sync for all classes
+- [ ] **Verification:** Spot-check 10 class teams, confirm rosters correct
+- [ ] **Staff communication:** Email staff with class Teams links
+- [ ] **Documentation:** Document monthly SDS sync process
+
+**Owner:** Compass admin + M365 admin (3-5 days)  
+**Acceptance Criteria:**
+- All classes have Teams channels
+- All staff are team owners for their classes
+- All enrolled students are team members
+- Zero duplicate groups
+- SDS sync completes without errors
+- Staff can open Teams and see their classes immediately
+
+#### 2.2 ITRequests List & Power App (5 days) — *unchanged*
+- [ ] Create ITRequests SharePoint List (schema: all fields including new CompassPersonID, CompassLink)
 - [ ] Create IT Support Power App (canvas app, form layout, mobile-first)
 - [ ] Embed app in Teams (as a tab in IT Support channel)
 - [ ] Embed app in SharePoint (Request Something page)
 - [ ] Add camera integration (mobile screenshot capture)
 - [ ] Test form submission → list item creation
 
-**Owner:** Power Platform Builder (3-4 days)  
-**Acceptance Criteria:**
-- Form opens in Teams + SharePoint without errors
-- All form fields present + working
-- Submit button creates list item with auto-number IT-2026-000001
-- Form clears on successful submit
-- User gets success message with ticket number
+**Owner:** Power Platform Builder (3-4 days)
 
-#### 2.2 IT Triage Power Automate Flow (5 days)
+#### 2.3 IT Triage Power Automate Flow (5 days) — *unchanged*
 - [ ] Build flow: Triggered on ITRequests item created
 - [ ] Flow reads RoutingTags + routes to correct Teams channel
 - [ ] Posts summary to Teams (auto-mentions on-call IT lead if Critical)
@@ -206,108 +187,79 @@ First workflow goes live. IT staff now receive & track all support requests in o
 - [ ] Sends email to requester (confirmation + ticket number)
 - [ ] Tests flow with sample data (5 test cases: different categories, impact levels)
 
-**Owner:** Power Automate Flow Builder (4-5 days)  
-**Acceptance Criteria:**
-- Flow runs without errors
-- Teams message posts within 2 min of form submit
-- Planner task auto-created + assigned
-- Email sends to requester (test with IT staff first)
-- SLA due date calculated correctly (Critical = 4h, Standard = 1 day)
+**Owner:** Power Automate Flow Builder (4-5 days)
 
-#### 2.3 IT Status Update Flow (3 days)
+#### 2.4 IT Status Update Flow (3 days) — *unchanged*
 - [ ] Build flow: Triggered when ITRequests status changes
 - [ ] On "In Progress": Email requester, post to Teams
 - [ ] On "Waiting on User": Email requester, add Planner label
 - [ ] On "Resolved": Calculate SLAMet, email requester, post to IT channel
 - [ ] On "Closed": Archive Planner task, send final notification
 
-**Owner:** Power Automate Flow Builder (2-3 days)  
-**Acceptance Criteria:**
-- Status transitions trigger emails + Teams posts
-- SLA calculation is correct
-- Notifications are timely (< 1 min after status change)
-- No duplicate notifications
+**Owner:** Power Automate Flow Builder (2-3 days)
 
-#### 2.4 IT Dashboard (Power BI) (3 days)
+#### 2.5 IT Dashboard (Power BI) (3 days) — *unchanged*
 - [ ] Create Power BI report: Connect to ITRequests list as data source
-- [ ] Add visualizations:
-  - Tile: Total open tickets + breakdown by category
-  - Tile: Avg time to triage (target: 2h)
-  - Tile: Avg time to resolve (target: 1 day)
-  - Tile: % SLA Met (target: 85%+)
-  - Chart: Tickets created per week (trend)
-  - Chart: Distribution by impact level
-  - Chart: Top issues (by category)
+- [ ] Add visualizations (total open, avg triage time, SLA %, trend, impact distribution, top issues)
 - [ ] Publish to SharePoint (Dashboards page)
-- [ ] Add row-level security (IT staff can see all, other staff can see only their own tickets)
+- [ ] Add row-level security (IT staff see all, others see only their own)
 - [ ] Set refresh: Daily at 6am
 
-**Owner:** Power BI analyst (2-3 days)  
-**Acceptance Criteria:**
-- Dashboard loads < 3s
-- All tiles show correct data
-- Charts are readable + insightful
-- Data refreshes daily
-- Mobile view works
+**Owner:** Power BI analyst (2-3 days)
 
-#### 2.5 Change Control Process Testing (2 days)
+#### 2.6 Compass Data Exports Setup (2 days) — **NEW**
+- [ ] **Compass admin:** Configure Compass to export attendance, people, events CSVs (monthly)
+- [ ] **M365 admin:** Create "Compass Data Exports" library in SharePoint
+- [ ] **Power BI analyst:** Create sample Power BI dashboard connecting to Compass exports + ITRequests list
+- [ ] **Documentation:** Document monthly export/upload process
+
+**Owner:** Compass admin + M365 admin + Power BI analyst (2 days)  
+**Acceptance Criteria:**
+- First Compass CSV export uploaded to SharePoint library
+- Power BI dashboard pulls data from CSV (sample data only at this stage)
+- Monthly process documented
+
+#### 2.7 Change Control Process Testing (2 days) — *unchanged*
 - [ ] Perform dry run: Deploy IT Support app from DEV to PROD
-- [ ] Test rollback scenario: Disable app, then re-enable
+- [ ] Test rollback scenario
 - [ ] Document steps in Change Control runbook
 - [ ] Train IT team on approval process
 
-**Owner:** IT Lead (1-2 days)  
-**Acceptance Criteria:**
-- App deployment takes < 30 min
-- Rollback works
-- Zero downtime during deployment
-- Team understands change control
+**Owner:** IT Lead (1-2 days)
 
-#### 2.6 IT Staff Training (1 day)
-- [ ] Train 5-10 IT staff on:
-  - How to triage tickets in Planner
-  - How to update status in list
-  - How to read the dashboard
-  - How to escalate critical issues
-- [ ] Create quick reference card (laminated, desk-side)
+#### 2.8 IT Staff Training (1 day) — *unchanged*
+- [ ] Train 5-10 IT staff on triage, status updates, dashboards, escalation
+- [ ] Create quick reference card
 
 **Owner:** IT Manager (1 day)
 
 ### Sprint 2 Testing & QA
 
-**UAT Plan (2 weeks before release):**
-1. Select 3 IT tech volunteers
-2. Have them use IT Support form to submit test requests
-3. IT Manager triages + resolves the requests
-4. Collect feedback: "Is the form easy? Is Planner clear? Is email helpful?"
-5. Iterate based on feedback
-
-**Load Testing:**
-- Simulate 50 concurrent form submissions (peak scenario)
-- Monitor flow performance (target: < 2s per request processing)
-- Monitor Teams notifications (ensure no flooding)
+- [ ] **SDS Testing:** Small group of classes (verify Teams created, rosters synced)
+- [ ] **IT Workflow UAT:** 3 IT tech volunteers submit test tickets, triage, resolve
+- [ ] **Load Testing:** Simulate 50 concurrent form submissions
+- [ ] **Feedback:** Collect team feedback (form easy? Planner clear? Email helpful?)
 
 ### Sprint 2 Release
 
 **Release Date:** Apr 10, 2026  
-**Who:** IT Lead + Builder  
 **Process:**
-1. Deploy to PROD via Change Control
-2. Soft launch to IT team (use for 1 week before full rollout)
-3. Announce to staff: "New way to report IT issues — use Nossal Hub → Request Something → IT Support"
-4. Monitor for 2 weeks (daily standup, track issues)
-5. Celebrate! First workflow live.
+1. SDS sync runs for all classes (staggered: Grade 7-9, Grade 10-12, Staff)
+2. Deploy IT Support app to PROD via Change Control
+3. Soft launch to IT team (use for 1 week before full rollout)
+4. Announce: "New IT Support form + Class Teams channels now live!"
+5. Monitor daily (2 weeks)
 
 ### Sprint 2 Success Metrics
 
-| Metric | Target | Owner |
-|--------|--------|-------|
-| Form submission success rate | 95%+ | Flow monitoring |
-| Avg triage time | < 2h | Planner tracking |
-| Avg resolution time | 1 day (standard) | Dashboard |
-| % SLA Met | 85%+ | Dashboard |
-| User satisfaction (NPS) | 7+/10 | Survey after 2 weeks |
-| Zero critical bugs in first 2 weeks | ✓ | QA |
+| Metric | Target |
+|--------|--------|
+| All classes have Teams channels | 100% |
+| Form submission success rate | 95%+ |
+| Avg triage time | < 2h |
+| Avg resolution time | 1 day (standard) |
+| % SLA Met | 85%+ |
+| User satisfaction (NPS) | 7+/10 |
 
 ---
 
